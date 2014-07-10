@@ -9,6 +9,7 @@
     <!-- Bootstrap -->
     <link href="css/bootstrap.css" rel="stylesheet">
     <link href="css/inbaltone.css" rel="stylesheet">
+    <link href="css/page-player.css" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -49,6 +50,9 @@
                 </div>
                 <div class="page">
                     <h1>page two</h1>
+                    <div class="sample-player">
+                        <a href="/sounds/1H.wav">Test1</a>
+                    </div>
                     Hello {{item.firstName}} {{item.lastName}}! <br/>
                     your age: last name: <input type="text" v-model="item.age"/><br/>
 
@@ -100,6 +104,8 @@
     <script src="js/bootstrap.js"></script>
 
     <!-- App code -->
+    <script src="js/soundmanager2.js"></script>
+    <script src="js/page-player.js"></script>
     <script src="js/bundle.js"></script>
   </body>
 </html>
