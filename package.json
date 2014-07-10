@@ -1,0 +1,20 @@
+{
+  "name": "inbaltone",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.html",
+  "scripts": {
+    "start": "beefy js/inbaltone.js:js/bundle.js 8080"
+  },
+  "repository": "",
+  "author": "",
+  "license": "BSD",
+  "devDependencies": {
+    "beefy": ">=0.7.1",
+    "browserify": ">=3.20.0"
+  },
+  "dependencies": {
+    "vue": "~0.10.5",
+    "express": "~4.5.1"
+  }
+}

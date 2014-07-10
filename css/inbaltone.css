@@ -1,0 +1,82 @@
+.main-content {
+   padding: 80px 15px;
+   text-align: center;
+}
+
+.wizard-frame {
+    border: 2px solid #ced9ff;
+    height: 400px;
+    position: relative;
+    overflow: hidden;
+}
+
+div.page{
+    padding: 15px;
+}
+
+.wizard-canvas {
+    -webkit-transition: all .3s ease;
+    -moz-transition: all .3s ease;
+    -ms-transition: all .3s ease;
+    -o-transition: all .3s ease;
+    z-index: 2;
+    height: 100%;
+}
+
+.wizard-page {
+    position: relative;
+    height: 100%;
+    width:1140px;
+    display: inline-block;
+    float: left;
+    border: 1px dotted #eee;
+}
+
+.wizard-navigator {
+    -webkit-transition: opacity .7s;
+    -moz-transition: opacity .7s;
+    -ms-transition: opacity .7s;
+    -o-transition: opacity .7s;
+    transition: opacity .7s;
+    position: absolute;
+    bottom: 3px;
+    height: 20px;
+    width: 100px;
+    left: 50%;
+    margin-left: -50px;
+    opacity: .5;
+    z-index: 3;
+    text-align: center;
+}
+
+.wizard-navigator .dot {
+    height: 15px;
+    width: 15px;
+    border: 1px solid #cddaff;
+    background-color: #dde2ff;
+    display: inline-block;
+    cursor: pointer;
+    margin: 3px;
+}
+
+.wizard-navigator .dot.selected {
+    background-color: #b9beff;
+}
+
+.wizard-navigator:hover {
+    opacity: .9;
+}
+
+.button-left, .button-right {
+    position: absolute;
+    bottom: 40px;
+    width: 100px;
+}
+
+.button-left {
+    left: 10px;
+}
+
+.button-right {
+    right: 10px;
+}
