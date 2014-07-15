@@ -904,6 +904,11 @@ function PagePlayer() {
     return c;
   };
 
+
+  this.setPlaylist = function(playlist) {
+    console.log('set playlist!');
+  }
+
   this.initItem = function(oNode) {
     if (!oNode.id) {
       oNode.id = 'pagePlayerMP3Sound'+(self.soundCount++);
@@ -918,7 +923,7 @@ function PagePlayer() {
     }
   };
 
-  this.init = function(oConfig) {
+  this.init = function(oConfig, callback) {
 
     if (oConfig) {
       // allow overriding via arguments object
@@ -1066,6 +1071,8 @@ function PagePlayer() {
       pl.handleClick({target:pl.getByClassName('playlist', 'ul')[0].getElementsByTagName('a')[0]});
     }
 
+    callback();
+
   };
 
 }
@@ -1074,5 +1081,5 @@ soundManager.useFlashBlock = true;
 
 soundManager.onready(function() {
   pagePlayer = new PagePlayer();
-  pagePlayer.init(typeof PP_CONFIG !== 'undefined' ? PP_CONFIG : null);
+  pagePlayer.init(typeof PP_CONFIG !== 'undefined' ? PP_CONFIG : null, PP_CB);
 });
