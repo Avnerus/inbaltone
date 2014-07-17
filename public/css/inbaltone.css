@@ -30,6 +30,7 @@ div.page{
     display: inline-block;
     float: left;
     border: 1px dotted #eee;
+    background-color: #f7faf9;
 }
 
 .wizard-navigator {
@@ -79,4 +80,29 @@ div.page{
 
 .button-right {
     right: 10px;
+}
+
+.timing {
+    display: none !important;
+}
+.button-container {
+    margin-top: 100px;
+    transition: all 1s ease;
+    opacity: 1;
+}
+.test-button {
+    width: 200px;
+    height: 200px;
+    font-size: 32px;
+}
+
+.button-container.v-enter, .button-container.v-leave {
+    opacity: 0;
+}
+
+.sample-player {
+    margin-top: 30px;
+}
+ul.playlist li {
+ background-color: #F3C9FF;
 }

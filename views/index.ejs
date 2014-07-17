@@ -8,8 +8,8 @@
 
     <!-- Bootstrap -->
     <link href="css/bootstrap.css" rel="stylesheet">
-    <link href="css/inbaltone.css" rel="stylesheet">
     <link href="css/page-player.css" rel="stylesheet">
+    <link href="css/inbaltone.css" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -49,20 +49,33 @@
                     last name: <input type="text" v-model="item.lastName"/><br/>
                 </div>
                 <div class="page">
-                    <h1>page two</h1>
-                    <div class="sample-player">
+                    <h1>Training Set</h1>
+                    <div class="sample-player" v-if="!showButtons">
                         <ul class="playlist use-peak">
                             <li>
-                                <a href="/sounds/1H.wav">Sound</a>
+                            <a data-playlist="training" href="#">{{trainingCounter}}</a>
                             </li>
                         </ul>
                     </div>
-                    Hello {{item.firstName}} {{item.lastName}}! <br/>
-                    your age: last name: <input type="text" v-model="item.age"/><br/>
+                    <div class="row button-container" v-if="showButtons" v-transition>
+                        <div dir="rtl" class="col-md-6">
+                            <button class="test-button btn btn-primary" v-on="click: submit('training', {{trainingCounter}}, 1, $event)">1 זהה ל-2</button>
+                        </div>
+                        <div dir="rtl" class="col-md-6">
+                            <button class="test-button btn btn-success" v-on="click: submit(3, $event)">3 זהה ל-2</button>
+                        </div>
+                    </div>
 
                 </div>
                 <div class="page">
-                    <h1>page three</h1>
+                    <h1>Test Set</h1>
+                    <div class="sample-player">
+                        <ul class="playlist use-peak">
+                            <li>
+                            <a data-playlist="test" href="/sounds/1H.wav">{{testCounter}}</a>
+                            </li>
+                        </ul>
+                    </div>
                     your age is {{item.age}}
                 </div>
                 <div class="page">
@@ -77,22 +90,22 @@
             <div class="wizard-canvas" v-style="width: canvasWidth, $transform: translateX">
                 <div class="wizard-page">
                     <content select="div.page:nth-child(1)"></content>
-                    <button class="button-right" v-on="click: nextPage()">next</button>
+                    <button class="btn btn-info button-right" v-on="click: nextPage()">next</button>
                 </div>
                 <div class="wizard-page">
                     <content select="div.page:nth-child(2)"></content>
-                    <button class="button-left" v-on="click: prevPage()">back</button>
-                    <button class="button-right" v-on="click: nextPage()">next</button>
+                    <button class="btn btn-info button-left" v-on="click: prevPage()">back</button>
+                    <button class="btn btn-info button-right" v-on="click: nextPage()">next</button>
                 </div>
                 <div class="wizard-page">
                     <content select="div.page:nth-child(3)"></content>
-                    <button class="button-left" v-on="click: prevPage()">back</button>
-                    <button class="button-right" v-on="click: nextPage()">next</button>
+                    <button class="btn btn-info button-left" v-on="click: prevPage()">back</button>
+                    <button class="btn btn-info button-right" v-on="click: nextPage()">next</button>
                 </div>
                 <div class="wizard-page">
                     <content select="div.page:nth-child(4)"></content>
-                    <button class="button-left" v-on="click: prevPage()">back</button>
-                    <button class="button-right" v-on="click: finish()">finish</button>
+                    <button class="btn btn-info button-left" v-on="click: prevPage()">back</button>
+                    <button class="btn btn-info button-right" v-on="click: finish()">finish</button>
                 </div>
 
             </div>

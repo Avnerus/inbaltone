@@ -249,6 +249,11 @@ function PagePlayer() {
     return (typeof self.soundsByObject[o.id] !== 'undefined'?self.soundsByObject[o.id]:null);
   };
 
+  this.getSoundByName = function(name) {
+    console.log("Get sound by name " , name);
+    return (typeof self.soundsByObject[name] !== 'undefined'?self.soundsByObject[name]:null);
+  };
+
   this.getPreviousItem = function(o) {
     // given <li> playlist item, find previous <li> and then <a>
     if (o.previousElementSibling) {
@@ -375,6 +380,9 @@ function PagePlayer() {
         self.setPageTitle();
         self.resetPageIcon();
       }
+
+
+      self.onSamplePlayed();
     },
 
     whileloading: function() {
@@ -578,8 +586,13 @@ function PagePlayer() {
     // OK, we're dealing with a link
 
     sURL = o.getAttribute('href');
+    var playlistName = o.getAttribute('data-playlist');
+    var playlist = self.playlists[playlistName];
+    var playCounter = self.counters[playlistName];
 
-    if (!o.href || (!sm.canPlayLink(o) && !self.hasClass(o,'playable')) || self.hasClass(o,'exclude')) {
+    console.log("Play playlist: " + playlistName, playlist);
+
+    if ((!o.href || (!sm.canPlayLink(o) && !self.hasClass(o,'playable')) || self.hasClass(o,'exclude')) && !playlist) {
 
       // do nothing, don't return anything.
       return true;
@@ -595,10 +608,22 @@ function PagePlayer() {
       self.initItem(o);
 
       soundURL = o.href;
-      thisSound = self.getSoundByObject(o);
+
+      var soundId;
+
+      if (playlist) {
+          soundId = "/" + playlistName + "/" + playlist[playCounter];
+          soundURL = soundId;
+          thisSound = self.getSoundByName(soundId);
+      }
+      else {
+          soundId = o.id;
+          thisSound = self.getSoundByObject(o);
+      }
 
       if (thisSound) {
 
+        console.log("PLAYING CACHED", thisSound);
         // sound already exists
         self.setPageTitle(thisSound._data.originalTitle);
         if (thisSound === self.lastSound) {
@@ -627,8 +652,9 @@ function PagePlayer() {
       } else {
 
         // create sound
+        console.log("Create sound " + soundId);
         thisSound = sm.createSound({
-          id:o.id,
+          id:soundId,
           url:decodeURI(soundURL),
           onplay:self.events.play,
           onstop:self.events.stop,
@@ -649,7 +675,7 @@ function PagePlayer() {
         if (spectrumContainer) {
           oLI.appendChild(spectrumContainer);
         }
-        self.soundsByObject[o.id] = thisSound;
+        self.soundsByObject[soundId] = thisSound;
 
         // tack on some custom data
         thisSound._data = {
@@ -905,8 +931,10 @@ function PagePlayer() {
   };
 
 
-  this.setPlaylist = function(playlist) {
-    console.log('set playlist!');
+  this.setPlaylist = function(name, playlist) {
+    console.log('set playlist! setting', name, ' to ', playlist);
+    this.playlists[name] = playlist;
+    this.counters[name] = 0;
   }
 
   this.initItem = function(oNode) {
@@ -937,6 +965,11 @@ function PagePlayer() {
 
     // apply externally-defined override, if applicable
     this.cssBase = []; // optional features added to ul.playlist
+
+
+    // PLAYLISTS
+    this.playlists = {};
+    this.counters = {};
 
     // apply some items to SM2
     sm.useFlashBlock = true;

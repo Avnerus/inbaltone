@@ -5,8 +5,14 @@ var fs = require('fs');
 
 app.get('/bundle.js', browserify('./inbaltone.js'));
 
-app.get('/soundlist', function(req, res){
-    fs.readdir('./public/sounds', function(err, files) {
+app.get('/training', function(req, res){
+    fs.readdir('./public/training', function(err, files) {
+        console.log(err, files);
+        res.send({list:files});
+    });
+});
+app.get('/test', function(req, res){
+    fs.readdir('./public/test', function(err, files) {
         console.log(err, files);
         res.send({list:files});
     });
