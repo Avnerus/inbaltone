@@ -10,7 +10,6 @@ lcov.info
 *.gz
 pids
 logs
-results
 build
 .grunt
 node_modules

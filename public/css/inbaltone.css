@@ -26,7 +26,7 @@ div.page{
 .wizard-page {
     position: relative;
     height: 100%;
-    width:1140px;
+    width:1135px;
     display: inline-block;
     float: left;
     border: 1px dotted #eee;
@@ -86,7 +86,7 @@ div.page{
     display: none !important;
 }
 .button-container {
-    margin-top: 100px;
+    margin-top: 70px;
     transition: all 1s ease;
     opacity: 1;
 }
@@ -94,6 +94,7 @@ div.page{
     width: 200px;
     height: 200px;
     font-size: 32px;
+    white-space: normal;
 }
 
 .button-container.v-enter, .button-container.v-leave {
@@ -101,8 +102,33 @@ div.page{
 }
 
 .sample-player {
-    margin-top: 30px;
+    margin-top: 130px;
 }
 ul.playlist li {
  background-color: #F3C9FF;
+}
+
+#finished-training {
+    font-size: 48px;
+    margin-top: 100px;
+}
+#finished-test {
+    font-size: 48px;
+    margin-top: 100px;
+}
+
+.person-details {
+    width: 800px;
+    margin-left: 500px;
+    margin-top: 50px;
+}
+
+#instructions {
+    font-size: 32px;
+    text-align: right;
+}
+
+.button-question {
+    font-size: 32px;
+    margin-bottom: 50px;
 }

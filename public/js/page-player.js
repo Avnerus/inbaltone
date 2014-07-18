@@ -381,8 +381,10 @@ function PagePlayer() {
         self.resetPageIcon();
       }
 
+      var playlist = self.playlists[this._data.playlist];
+      playlist.counter++;
 
-      self.onSamplePlayed();
+      self.onSamplePlayed(playlist.name, playlist.counter);
     },
 
     whileloading: function() {
@@ -587,8 +589,8 @@ function PagePlayer() {
 
     sURL = o.getAttribute('href');
     var playlistName = o.getAttribute('data-playlist');
-    var playlist = self.playlists[playlistName];
-    var playCounter = self.counters[playlistName];
+    var playlist = self.playlists[playlistName].list;
+    var playCounter = self.playlists[playlistName].counter;
 
     console.log("Play playlist: " + playlistName, playlist);
 
@@ -612,7 +614,7 @@ function PagePlayer() {
       var soundId;
 
       if (playlist) {
-          soundId = "/" + playlistName + "/" + playlist[playCounter];
+          soundId = "/" + playlistName + "/" + playlist[playCounter].filename;
           soundURL = soundId;
           thisSound = self.getSoundByName(soundId);
       }
@@ -623,7 +625,6 @@ function PagePlayer() {
 
       if (thisSound) {
 
-        console.log("PLAYING CACHED", thisSound);
         // sound already exists
         self.setPageTitle(thisSound._data.originalTitle);
         if (thisSound === self.lastSound) {
@@ -691,7 +692,8 @@ function PagePlayer() {
           oGraph: self.select('spectrum-box',oLI),
           className: self.css.sPlaying,
           originalTitle: o.innerHTML,
-          metadata: null
+          metadata: null,
+          playlist: playlistName
         };
 
         if (spectrumContainer) {
@@ -933,8 +935,12 @@ function PagePlayer() {
 
   this.setPlaylist = function(name, playlist) {
     console.log('set playlist! setting', name, ' to ', playlist);
-    this.playlists[name] = playlist;
-    this.counters[name] = 0;
+    this.playlists[name] =  { 
+            name: name,
+            list: playlist,
+            length: playlist.length,
+            counter: 0
+    }
   }
 
   this.initItem = function(oNode) {
@@ -969,7 +975,6 @@ function PagePlayer() {
 
     // PLAYLISTS
     this.playlists = {};
-    this.counters = {};
 
     // apply some items to SM2
     sm.useFlashBlock = true;

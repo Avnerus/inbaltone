@@ -19,64 +19,131 @@
     <![endif]-->
   </head>
   <body>
-    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#">Tone Discrimination Test</a>
-        </div>
-        <div class="collapse navbar-collapse">
-          <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
-          </ul>
-        </div><!--/.nav-collapse -->
-      </div>
-    </div>
     <div class="container">
       <div class="main-content row">
-         <h1>Tone Discrimination Test</h1>
           <my-wizard>
                 <div class="page">
-                    <h1>page one</h1>
-                    first name: <input type="text" v-model="item.firstName"/><br/>
-                    last name: <input type="text" v-model="item.lastName"/><br/>
+                    <div class="person-details form-horizontal" dir="rtl">
+                      <div class="form-group">
+                        <div class="col-sm-6">
+                          <input type="text" class="form-control" id="inputName" placeholder="שם" v-model="person.name">
+                        </div>
+                        <label for="inputName" class="col-sm-1 control-label">שם</label>
+                      </div>
+                      <div class="form-group">
+                        <div class="col-sm-6">
+                          <input type="number" min="0" class="form-control" id="inputage" placeholder="גיל" v-model="person.age">
+                        </div>
+                        <label for="inputage" class="col-sm-1 control-label">גיל</label>
+                      </div>
+                      <div class="form-group">
+                        <div class="col-sm-6">
+                        <select class="form-control" v-model="person.gender">
+                          <option>זכר</option>
+                          <option>נקבה</option>
+                        </select>
+                        </div>
+                        <label class="col-sm-1 control-label">מין</label>
+                      </div>
+                      <div class="form-group">
+                        <div class="col-sm-6">
+                          <input type="text" class="form-control" id="inputMotherTounge" placeholder="שפת אם" v-model="person.motherTounge">
+                        </div>
+                        <label for="inputMotherTounge" class="col-sm-1 control-label">שפת אם</label>
+                      </div>
+                      <div class="form-group">
+                        <div class="col-sm-6">
+                          <input type="text" class="form-control" id="inputOtherLanguages" placeholder="שפות נוספת" v-model="person.otherLanguages">
+                        </div>
+                        <label for="inputOtherLanguages" class="col-sm-1 control-label">שפות נוספות</label>
+                      </div>
+                   </div>
                 </div>
                 <div class="page">
-                    <h1>Training Set</h1>
-                    <div class="sample-player" v-if="!showButtons">
+                    <div id="instructions">
+                        <p dir="rtl">
+במהלך הניסוי יושמעו לך קבצי קול המכילים שלוש מילים בשפת הבמברה המדוברת במלי שבמערב אפריקה.
+                        </p>
+                        <p>
+                        <p dir="rtl">
+מבין שלושת המילים הללו, שתיים מהן הן אותה המילה, והמילה הנוספת היא מילה שונה.
+                        </p>
+                        <p dir="rtl">
+עליך להחליט איזה זוג מילים הוא אותה המילה, הראשונה והאמצעית או האחרונה והאמצעית. 
+שים לב! לא תתקל בקבצים בהם המילים הראשונה והאחרונה הן אותה המילה.
+                        </p>
+                        <p dir="rtl">
+בהתאם להחלטתך, לחץ על הכפתור המתאים מבין השניים שיופיעו מיד בתום ההשמעה.
+                        </p>
+                        <p dir="rtl" style="margin-top: 20px;">
+נתחיל בקבוצת אימון קצרה של מילים בעברית.
+                        </p>
+                    </div>
+                </div>
+                <div class="page">
+                    <div v-if="finishedTraining" id="finished-training">
+                        <p dir="rtl">
+                        הסתיימה קבוצת האימון, אנא קרא לענבל
+                        </p>
+                    </div>
+
+                    <div class="sample-player" v-if="!showButtons && !finishedTraining">
+                        <p dir="rtl" style="font-size: 20px;">
+                        לחץ על הפס להשמעה
+                        </p>
                         <ul class="playlist use-peak">
                             <li>
-                            <a data-playlist="training" href="#">{{trainingCounter}}</a>
+                            <a data-playlist="training" href="#">{{playlists.training.counter}} / {{playlists.training.length}}</a>
                             </li>
                         </ul>
                     </div>
                     <div class="row button-container" v-if="showButtons" v-transition>
-                        <div dir="rtl" class="col-md-6">
-                            <button class="test-button btn btn-primary" v-on="click: submit('training', {{trainingCounter}}, 1, $event)">1 זהה ל-2</button>
+                        <div class="button-question">
+                            <p dir="rtl">
+                            איזה זוג מילים הוא אותה המילה?
+                            </p>
                         </div>
                         <div dir="rtl" class="col-md-6">
-                            <button class="test-button btn btn-success" v-on="click: submit(3, $event)">3 זהה ל-2</button>
+                            <button class="test-button btn btn-primary" v-on="click: submit('training', {{playlists.training.counter}}, 1, $event)">הראשונה והאמצעית</button>
+                        </div>
+                        <div dir="rtl" class="col-md-6">
+                            <button class="test-button btn btn-success" v-on="click: submit('training', {{playlists.training.counter}}, 3, $event)">האחרונה והאמצעית</button>
                         </div>
                     </div>
 
                 </div>
                 <div class="page">
-                    <h1>Test Set</h1>
-                    <div class="sample-player">
+                    <div v-if="finishedTest" id="finished-test">
+                        <p dir="rtl">
+                        הניסוי הסתיים. 
+                        </p>
+                        <p dir="rtl" style="margin-top: 100px;">
+תודה על השתתפותך!
+                        </p>
+                    </div>
+                    <div class="sample-player" v-if="!showButtons && !finishedTest">
+                        <p dir="rtl" style="font-size: 20px;">
+                        לחץ על הפס להשמעה
+                        </p>
                         <ul class="playlist use-peak">
                             <li>
-                            <a data-playlist="test" href="/sounds/1H.wav">{{testCounter}}</a>
+                            <a data-playlist="test" href="#">{{playlists.test.counter}} / {{playlists.test.length}}</a>
                             </li>
                         </ul>
                     </div>
-                    your age is {{item.age}}
+                    <div class="row button-container" v-if="showButtons" v-transition>
+                        <div class="button-question">
+                            <p dir="rtl">
+                            איזה זוג מילים הוא אותה המילה?
+                            </p>
+                        </div>
+                        <div dir="rtl" class="col-md-6">
+                            <button class="test-button btn btn-primary" v-on="click: submit('test', {{playlists.test.counter}}, 1, $event)">הראשונה והאמצעית</button>
+                        </div>
+                        <div dir="rtl" class="col-md-6">
+                            <button class="test-button btn btn-success" v-on="click: submit('test', {{playlists.test.counter}}, 3, $event)">האחרונה והאמצעית</button>
+                        </div>
+                    </div>
                 </div>
                 <div class="page">
                     <h1>page four</h1>
@@ -90,24 +157,19 @@
             <div class="wizard-canvas" v-style="width: canvasWidth, $transform: translateX">
                 <div class="wizard-page">
                     <content select="div.page:nth-child(1)"></content>
-                    <button class="btn btn-info button-right" v-on="click: nextPage()">next</button>
+                    <button class="btn btn-info button-right" v-attr="disabled: person.age == '' || person.motherTounge == '' || person.otherLanguages == ''" v-on="click: submitDetails() && nextPage()">המשך</button>
                 </div>
                 <div class="wizard-page">
                     <content select="div.page:nth-child(2)"></content>
-                    <button class="btn btn-info button-left" v-on="click: prevPage()">back</button>
-                    <button class="btn btn-info button-right" v-on="click: nextPage()">next</button>
+                    <button class="btn btn-info button-right" v-on="click: nextPage()">המשך</button>
                 </div>
                 <div class="wizard-page">
                     <content select="div.page:nth-child(3)"></content>
-                    <button class="btn btn-info button-left" v-on="click: prevPage()">back</button>
-                    <button class="btn btn-info button-right" v-on="click: nextPage()">next</button>
+                    <button class="btn btn-info button-right" v-if="finishedTraining" v-on="click: nextPage()">המשך</button>
                 </div>
                 <div class="wizard-page">
                     <content select="div.page:nth-child(4)"></content>
-                    <button class="btn btn-info button-left" v-on="click: prevPage()">back</button>
-                    <button class="btn btn-info button-right" v-on="click: finish()">finish</button>
                 </div>
-
             </div>
             <div class="wizard-navigator">
                 <div v-repeat="i: ui.pages" v-class="dot: '1', selected: ui.index === i" v-on="click: moveTo(i)"></div>
