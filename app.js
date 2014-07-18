@@ -41,7 +41,7 @@ app.post('/person', function(req, res){
               if (err) {
                   res.send({status: 1});
               } else {
-                  fs.writeFile('./results/person.csv', csv, function(err) {
+                  fs.writeFile('./results/person.csv', "\ufeff" + csv, function(err) {
                       if (err) {
                           res.send({status: 1});
                       }
