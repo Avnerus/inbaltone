@@ -18,11 +18,12 @@ app.get('/playlist/:name', function(req, res){
         var list = [];
         list = files.map(function(filename) {
             parts = filename.split('-');
-            return {filename: filename, index: parseInt(parts[0]), name: parts[1], answer: parseInt(parts[2])};
+            return {filename: filename, name: parts[0], answer: parseInt(parts[1])};
         });
-        list = _.sortBy(list, function (cell) {
+        /*list = _.sortBy(list, function (cell) {
            return cell.index;  
-        });
+        });*/
+       list = _.shuffle(list);
 
         console.log(list);
         res.send({list:list});
