@@ -743,15 +743,15 @@ function PagePlayer() {
     if (!self.withinStatusBar(o)) {
       return true;
     }
-    self.dragActive = true;
+   // self.dragActive = true;
     self.lastSound.pause();
-    self.setPosition(e);
+   // self.setPosition(e);
     if (!isTouchDevice) {
       _event.add(document,'mousemove',self.handleMouseMove);
     } else {
       _event.add(document,'touchmove',self.handleMouseMove);
     }
-    self.addClass(self.lastSound._data.oControls,'dragging');
+  //  self.addClass(self.lastSound._data.oControls,'dragging');
     return self.stopEvent(e);
   };
   
